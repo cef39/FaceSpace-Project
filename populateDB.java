@@ -4,11 +4,10 @@ import java.util.Random;
 
 
 public class populateDB{
-	private static Connection connection;
-	private static Statement statement;
-	private static PreparedStatement prepStatement;
-	private static ResultSet resultSet;
-	private static String query;
+	private static Connection connection;	//used to hold the jdbc connection to the DB
+	private static Statement statement; //used to create an instance of the connection
+	private static PreparedStatement prepStatement; //used to create a prepared statement, that will be later reused
+	private static String query; //this will hold the query we are using
 	
 	
 	public static void main(String args[]) throws SQLException
@@ -22,12 +21,16 @@ public class populateDB{
 		
 		try{
 			System.out.println("Registering DB..");
+			// Register the oracle driver.  
 			DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
 			
 			System.out.println("Set url..");
+			//This is the location of the database.  This is the database in oracle
+			//provided to the class
 			String url = "jdbc:oracle:thin:@class3.cs.pitt.edu:1521:dbclass";
 			
 			System.out.println("Connect to DB..");
+			//create a connection to DB on class3.cs.pitt.edu
 			connection = DriverManager.getConnection(url, username, password);
 			
 			populateProfiles();
@@ -85,10 +88,12 @@ public class populateDB{
 			int y;
 			for (int i = 0; i < 100; i++){
 				String name = names[i];
+				//split name from above name array
 				String [] parts = name.split(" ");
 				String fname = parts[0];
 				String lname = parts[1];
 					
+				//everyone's born on 2/24. year is incremented each time
 				String birthday = year + "-02-24";
 				y = Integer.parseInt(year);
 				y++;
@@ -96,12 +101,15 @@ public class populateDB{
 					
 				String email = fname + lname + Integer.toString(i) + "@yahoo.com";
 					
+				//have to format birthday into Date object
 				java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd");
 				java.sql.Date birth = new java.sql.Date (df.parse(birthday).getTime());
 					
+				//gets current date and time as Timestamp
 				java.util.Date date = new java.util.Date();
 				java.sql.Timestamp login = new java.sql.Timestamp(date.getTime());
 					
+				//query to insert into table these values using prepStatement
 				query = "insert into Profiles values (?, ?, ?, ?, ?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
@@ -138,17 +146,21 @@ public class populateDB{
 		try{
 			int userID = 0;
 			for (int i = 0; i <= 200; i++){
+				//get random ID from listed IDs
 				Random gen = new Random();
 				int friendID = gen.nextInt(100);
 					
+				//get random ID from listed IDs
 				if (friendID == userID){
 					while (friendID == userID){
 						friendID = gen.nextInt(100);
 					}
 				}
 					
+				//random value for pending or establish relationship
 				int friendRequest = gen.nextInt(2);
 					
+				//random month and day
 				int month = gen.nextInt(12) + 1;
 				int day = gen.nextInt(27) + 1;
 					
@@ -158,9 +170,11 @@ public class populateDB{
 					
 				String date = ye + m + "-" + d;
 					
+				//convert establish date of friendship into Date object
 				java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd");
 				java.sql.Date establishedDate = new java.sql.Date (df.parse(date).getTime());
 					
+				//insert friendship into table
 				query = "insert into Friends values (?, ?, ?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
@@ -171,6 +185,7 @@ public class populateDB{
 					
 				prepStatement.executeUpdate();
 					
+				//inserts friendship into table, but swaps the ID's
 				query = "insert into Friends values (?, ?, ?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
@@ -209,29 +224,37 @@ public class populateDB{
 	
 	public static void populateGroups(){
 		try{
-			int user_ID_1 = 0;
-			int user_ID_2 = 0;
+			int user_ID_1 = -1;
+			int user_ID_2 = -1;
+			
+			//adds 3 random users to one group
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
-					
+				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
 					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
 					}
 				}
 				
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				//checks to make sure that third member isn't same as first two members
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
 				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
+				
+				//inserts into groups table
 				query = "insert into Groups values (?, ?, ?, ?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
@@ -245,6 +268,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -254,8 +279,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -278,6 +303,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -287,8 +314,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -311,6 +338,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -320,8 +349,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -344,6 +373,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -353,8 +384,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -377,6 +408,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -386,8 +419,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -410,6 +443,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -419,8 +454,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -443,6 +478,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -452,8 +489,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -476,6 +513,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -485,8 +524,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -509,6 +548,8 @@ public class populateDB{
 				connection.commit();
 			}
 			
+			user_ID_1 = -1;
+			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
@@ -518,8 +559,8 @@ public class populateDB{
 				}
 				
 					
-				if (i == 2 && user_ID == user_ID_2){
-					while (user_ID == user_ID_1){
+				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
+					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
@@ -563,15 +604,18 @@ public class populateDB{
 			for (int i = 0; i < 300; i ++){
 				Random gen = new Random();
 				
-				int sender_ID = gen.nextInt(99);
-				int receiver_ID = gen.nextInt(99);
+				//gets random ID from listed IDs
+				int sender_ID = gen.nextInt(100);
+				int receiver_ID = gen.nextInt(100);
 				
+				//checks to make sure they aren't the same
 				if (sender_ID == receiver_ID){
 					while (sender_ID == receiver_ID){
-						receiver_ID = gen.nextInt(99);
+						receiver_ID = gen.nextInt(100);
 					}
 				}
 				
+				//random month and day
 				int month = gen.nextInt(12) + 1;
 				int day = gen.nextInt(27) + 1;
 					
@@ -581,10 +625,12 @@ public class populateDB{
 					
 				String date = ye + m + "-" + d;
 					
+				//converts message date into Date object
 				java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd");
 				java.sql.Date DATE = new java.sql.Date (df.parse(date).getTime());
 					
 				
+				//inserts into Messages table
 				query = "insert into Messages values (?, ?, ?, ?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
