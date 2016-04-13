@@ -15,8 +15,8 @@ public class populateDB{
 	{
 		
 		String username, password;
-		username = "cef39";
-		password = "3910744";
+		username = "";
+		password = "";
 							
 		
 		
