@@ -8,16 +8,12 @@ public class populateDB{
 	private static Statement statement; //used to create an instance of the connection
 	private static PreparedStatement prepStatement; //used to create a prepared statement, that will be later reused
 	private static String query; //this will hold the query we are using
-	
+	private static String username = "cef39";
+	private static String password = "3910744";
+	private static String url = "jdbc:oracle:thin:@class3.cs.pitt.edu:1521:dbclass";
 	
 	public static void main(String args[]) throws SQLException
-	{
-		
-		String username, password;
-		username = "";
-		password = "";
-							
-		
+	{		
 		
 		try{
 			System.out.println("Registering DB..");
@@ -27,7 +23,7 @@ public class populateDB{
 			System.out.println("Set url..");
 			//This is the location of the database.  This is the database in oracle
 			//provided to the class
-			String url = "jdbc:oracle:thin:@class3.cs.pitt.edu:1521:dbclass";
+			
 			
 			System.out.println("Connect to DB..");
 			//create a connection to DB on class3.cs.pitt.edu
@@ -146,6 +142,7 @@ public class populateDB{
 		try{
 			int userID = 0;
 			for (int i = 0; i <= 200; i++){
+				connection = DriverManager.getConnection(url, username, password);
 				//get random ID from listed IDs
 				Random gen = new Random();
 				int friendID = gen.nextInt(100);
@@ -195,7 +192,7 @@ public class populateDB{
 				prepStatement.setDate(4, establishedDate);
 					
 				prepStatement.executeUpdate();
-				connection.commit();
+				connection.close();
 					
 				userID++;
 					
@@ -204,21 +201,10 @@ public class populateDB{
 				}
 					
 			}
-			connection.commit();
 		}
 		catch(Exception Ex){
 			System.out.println("Error connecting to database. Machine Error: " +
 						Ex.toString());
-		}
-		finally
-		{
-			try{
-				connection.close();
-			}
-			catch(SQLException Ex){
-				System.out.println("Error connecting to database. Machine Error: " +
-						Ex.toString());
-			}
 		}
 	}
 	
@@ -602,6 +588,7 @@ public class populateDB{
 	public static void populateMessages(){
 		try{
 			for (int i = 0; i < 300; i ++){
+				connection = DriverManager.getConnection(url, username, password);
 				Random gen = new Random();
 				
 				//gets random ID from listed IDs
@@ -641,22 +628,12 @@ public class populateDB{
 				prepStatement.setDate(5, DATE);
 				
 				prepStatement.executeUpdate();
-				connection.commit();
+				connection.close();
 			}
 		}
 		catch(Exception Ex){
 			System.out.println("Error connecting to database. Machine Error: " +
 						Ex.toString());
-		}
-		finally
-		{
-			try{
-				connection.close();
-			}
-			catch(SQLException Ex){
-				System.out.println("Error connecting to database. Machine Error: " +
-						Ex.toString());
-			}
 		}
 	}
 }
