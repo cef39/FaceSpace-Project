@@ -213,6 +213,18 @@ public class populateDB{
 			int user_ID_1 = -1;
 			int user_ID_2 = -1;
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 0);
+			prepStatement.setString(2, "Group numero uno");
+			prepStatement.setString(3, "We are number one!!!");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			//adds 3 random users to one group
 			for (int i = 0; i < 3; i++){
 				
@@ -241,329 +253,470 @@ public class populateDB{
 					user_ID_2 = user_ID;
 				
 				//inserts into groups table
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 0);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "Group numero uno");
-				prepStatement.setString(4, "We are number one!!!");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 0);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
+
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 1);
+			prepStatement.setString(2, "Dinos Rules");
+			prepStatement.setString(3, "We are trying to conquer the world by bringing back dinosaurs.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
 			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 1);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "Dinos Rules");
-				prepStatement.setString(4, "We are trying to conquer the world by bringing back dinosaurs.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 1);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 2);
+			prepStatement.setString(2, "Cell for Emperor");
+			prepStatement.setString(3, "Remember Cell from DBZ? He's our savior.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 2);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "Cell for Emperor");
-				prepStatement.setString(4, "Remember Cell from DBZ? He's our savior.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 2);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 3);
+			prepStatement.setString(2, "Egg Club");
+			prepStatement.setString(3, "We really like eggs.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 3);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "Egg Club");
-				prepStatement.setString(4, "We really like eggs.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 3);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 4);
+			prepStatement.setString(2, "Book Club");
+			prepStatement.setString(3, "We meet every Wednesday at 7PM at Schenley Cafe.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 4);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "Book Club");
-				prepStatement.setString(4, "We meet every Wednesday at 7PM at Schenley Cafe.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 4);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 5);
+			prepStatement.setString(2, "Squadddddd");
+			prepStatement.setString(3, "K-town represent.!!");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 5);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "Squadddddd");
-				prepStatement.setString(4, "K-town represent.!!");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 5);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 6);
+			prepStatement.setString(2, "Vamps");
+			prepStatement.setString(3, "Eat, drink, breathe like Vampires.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 6);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "Vamps");
-				prepStatement.setString(4, "Eat, drink, breathe like Vampires.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 6);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 7);
+			prepStatement.setString(2, "George Bush");
+			prepStatement.setString(3, "Yeh.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 7);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "George Bush");
-				prepStatement.setString(4, "Yeh.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 7);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 8);
+			prepStatement.setString(2, "FaceSpace Project Group");
+			prepStatement.setString(3, "Group to complete this project.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 8);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "FaceSpace Project Group");
-				prepStatement.setString(4, "Group to complete this project.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 8);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
 			}
 			
+			//inserts into groups table
+			query = "insert into Groups values (?, ?, ?, ?)";
+			prepStatement = connection.prepareStatement(query);
+					
+			prepStatement.setInt(1, 9);
+			prepStatement.setString(2, "D-Brown");
+			prepStatement.setString(3, "D-money appreciation group.");
+			prepStatement.setInt(4, 5);
+				
+			prepStatement.executeUpdate();
+			connection.commit();
+			
 			user_ID_1 = -1;
 			user_ID_2 = -1;
 			for (int i = 0; i < 3; i++){
+				
+				//grabs random user_ID
 				Random gen = new Random();
 				int user_ID = gen.nextInt(100);
 				
+				//checks to make sure that second member isn't same as first member
 				if (i == 1 && user_ID == user_ID_1){
+					while (user_ID == user_ID_1){
 						user_ID = gen.nextInt(100);
+					}
 				}
 				
-					
+				//checks to make sure that third member isn't same as first two members
 				if (i == 2 && (user_ID == user_ID_2 || user_ID == user_ID_1)){
 					while (user_ID == user_ID_1 || user_ID == user_ID_2){
 						user_ID = gen.nextInt(100);
 					}
 				}
-					
+				
+				//saves current user_ID
 				if (i == 0)
 					user_ID_1 = user_ID;
 				else if (i == 1)
 					user_ID_2 = user_ID;
-					
-				query = "insert into Groups values (?, ?, ?, ?, ?)";
+				
+				//inserts into groups table
+				query = "insert into UserGroups values (?, ?)";
 				prepStatement = connection.prepareStatement(query);
 					
-				prepStatement.setInt(1, 9);
-				prepStatement.setInt(2, user_ID);
-				prepStatement.setString(3, "D-Brown");
-				prepStatement.setString(4, "D-money appreciation group.");
-				prepStatement.setInt(5, 5);
+				prepStatement.setInt(1, user_ID);
+				prepStatement.setInt(2, 9);
 				
 				prepStatement.executeUpdate();
 				connection.commit();
